@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Данные Контакта</title>
+  <!-- Подключение библиотеки Materialize -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+  <!-- Подключение иконок Material Icons -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <style>
+    /* Стили для таблицы */
+    table {
+      border-collapse: collapse;
+      width: 100%;
+    }
+    th, td {
+      padding: 8px;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+    }
+    th {
+      background-color: #f2f2f2;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Данные Контакта</h1>
+    <ul>
+      <li><a href="\.."><i class="material-icons">arrow_back</i> Назад</a></li>
+    </ul>
+
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Имя</th>
+          <th>Email</th>
+          <th>Сообщение</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for contact in contacts %}
+          <tr>
+            <td>{{ contact.id }}</td>
+            <td>{{ contact.name }}</td>
+            <td>{{ contact.email }}</td>
+            <td>{{ contact.message }}</td>
+          </tr>
+        {% empty %}
+          <tr>
+            <td colspan="4">Контакты не найдены.</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+
+    <form method="post">
+      {% csrf_token %}
+      <div class="input-field">
+        <label for="name">Имя:</label>
+        <input type="text" id="name" name="name" class="validate">
+      </div>
+
+      <div class="input-field">
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" class="validate">
+      </div>
+
+      <div class="input-field">
+        <label for="message">Сообщение:</label>
+        <textarea id="message" name="message" class="materialize-textarea"></textarea>
+      </div>
+
+      <button class="btn waves-effect waves-light" type="submit" name="action">Отправить
+        <i class="material-icons right">send</i>
+      </button>
+    </form>
+  </div>
+
+  <!-- Подключение библиотеки jQuery -->
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+  <!-- Подключение библиотеки Materialize -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+  <!-- Инициализация компонентов Materialize -->
+  <script>
+    $(document).ready(function() {
+      M.updateTextFields();
+    });
+  </script>
+</body>
+</html>
