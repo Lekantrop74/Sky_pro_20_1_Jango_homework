@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
-
-from catalog.models import Contact
+from django.views.generic import ListView
+from .models import Contact, Product
 
 
 # Create your views here.
@@ -23,5 +23,15 @@ def contact(request):
 
         return redirect('contact')
 
-    contacts = Contact.objects.order_by('-id')[:5]
+    contacts = Contact.objects.order_by('-id')
     return render(request, 'catalog/contact.html', {'contacts': contacts})
+
+
+def base(request):
+    return render(request, 'catalog/base.html')
+
+
+class ProductListView(ListView):
+    model = Product
+    template_name = 'catalog/product_list.html'
+    context_object_name = 'products'
