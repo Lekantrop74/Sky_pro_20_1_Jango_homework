@@ -1,7 +1,5 @@
 from django.core.paginator import Paginator
-from django.http import HttpResponse
-from django.views.generic import ListView
-from .models import Contact, Product
+from .models import Contact, Product, Category
 from django.shortcuts import render, redirect
 
 
@@ -41,12 +39,6 @@ def contact_output(request):
     return render(request, 'catalog/contact_output.html')
 
 
-def product_list_input(request):
-    return render(request, 'catalog/product_list_input.html')
-
-from django.shortcuts import render, redirect
-from .models import Product, Category
-
 def add_data(request):
     if request.method == 'POST':
         # Retrieve the form data from the POST request
@@ -77,14 +69,8 @@ def add_data(request):
     return render(request, 'catalog/add_data.html', context)
 
 
-
-
 def base(request):
     return render(request, 'catalog/base.html')
-
-
-def contact_input(request):
-    return render(request, 'catalog/contact_input.html')
 
 
 def product_list(request):
