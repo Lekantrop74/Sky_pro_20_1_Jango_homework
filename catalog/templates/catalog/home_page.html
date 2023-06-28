@@ -4,11 +4,17 @@
 	<title>Домашняя страница</title>
 </head>
 <body>
+{% include 'catalog/navbar.html' %}
+
 	<h1>Добро пожаловать на наш сайт!</h1>
 	<p>Навигация:</p>
 	<ul>
-		<li><a href="/home">Главная страница</a></li>
-		<li><a href="/contact">Контакты</a></li>
+			<li class="nav-item">
+				<a class="nav-link" href="{% url 'index' %}">Приветствие</a>
+			</li>
+			<li class="nav-item">
+					<a class="nav-link" href="{% url 'contact' %}">Контакты</a>
+			</li>
 	</ul>
 	<!-- Остальное содержимое вашей домашней страницы -->
 </body>

@@ -1,38 +1,91 @@
 {% extends 'catalog/base.html' %}
 
+{% load my_tags %}
+
 {% block content %}
+    <!-- Стили для скрытия изображений и подчеркивания текста -->
+    <style>
+        .hidden {
+            display: none;
+        }
+        .show-image {
+            color: blue;
+            text-decoration: underline;
+            cursor: pointer;
+        }
+    </style>
 
-<!-- Основные данные снизу -->
-<h1>Продукты</h1>
-<table class="table">
-	<thead>
-		<tr>
-			<th>Наименование</th>
-			<th>Описание</th>
-			<th>Изображение продукта</th>
-			<th>Категория</th>
-			<th>Цена</th>
-			<th>Дата создания</th>
-			<th>Дата последнего обновления</th>
-		</tr>
-	</thead>
-	<tbody>
-		{% for product in products %}
-		<tr>
-			<td>{{ product.name }}</td>
-			<td>{{ product.description }}</td>
-			{% if product.preview_image %}
-			<td><img src="{{ product.preview_image.url }}" alt="{{ product.name }}"></td>
-			{% else %}
-			<td>No image</td>
-			{% endif %}
-			<td>{{ product.category.name }}</td>
-			<td>{{ product.price }}</td>
-			<td>{{ product.created_at }}</td>
-			<td>{{ product.updated_at }}</td>
-		</tr>
-		{% endfor %}
-	</tbody>
-</table>
+    <!-- Заголовок страницы -->
+    <h2>Продукты</h2>
+    {% include 'catalog/product_list_input.html' %}
 
+
+    <!-- Таблица с данными о продуктах -->
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Наименование</th>
+                <th>Описание</th>
+                <th>Изображение продукта</th>
+                <th>Категория</th>
+                <th>Цена</th>
+                <th>Дата создания</th>
+                <th>Дата последнего обновления</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for product in page_obj %}
+                <tr>
+                    <td>{{ product.name }}</td>
+                    <td>{{ product.description }}</td>
+
+                    <!-- Если есть превью изображение, то показываем его -->
+                    {% if product.preview_image %}
+                        <td>
+                            <!-- Кнопка "Показать изображение" -->
+                            <span class="spoiler show-image">Показать изображение</span>
+                            <!-- Изображение продукта (скрытое) -->
+                            <img src="{% mediapath product.preview_image %}" alt="{{ product.name }}" class="hidden">
+                        </td>
+                    <!-- Если превью изображения нет, то выводим сообщение -->
+                    {% else %}
+                        <td>No image</td>
+                    {% endif %}
+
+                    <td>{{ product.category.name }}</td>
+                    <td>{{ product.price }}</td>
+                    <td>{{ product.created_at }}</td>
+                    <td>{{ product.updated_at }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <!-- Навигация по страницам -->
+    <div class="pagination">
+        <span class="step-links">
+            {% if page_obj.has_previous %}
+                <a href="?page=1">&laquo; первая</a>
+                <a href="?page={{ page_obj.previous_page_number }}">&lsaquo; предыдущая</a>
+            {% endif %}
+
+            <span class="current-page">
+                Страница {{ page_obj.number }} из {{ page_obj.paginator.num_pages }}
+            </span>
+
+            {% if page_obj.has_next %}
+                <a href="?page={{ page_obj.next_page_number }}">следующая &rsaquo;</a>
+                <a href="?page={{ page_obj.paginator.num_pages }}">последняя &raquo;</a>
+            {% endif %}
+        </span>
+    </div>
+
+    <!-- Скрипт для показа и скрытия изображений по нажатию на кнопку -->
+    <script>
+        $(document).ready(function () {
+            $('.spoiler').click(function () {
+                $(this).next('img').toggleClass('hidden');
+            });
+        });
+    </script>
 {% endblock %}

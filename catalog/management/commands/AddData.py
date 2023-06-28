@@ -1,5 +1,7 @@
 from django.core.management.base import BaseCommand
 from catalog.models import Category, Product
+import os
+
 
 
 class Command(BaseCommand):
@@ -39,7 +41,7 @@ class Command(BaseCommand):
             {
                 'name': 'Картофель',
                 'description': 'Отличный компаньон для любой еды',
-                'preview_image': None,
+                'preview_image': 'product_images/Картошка.png',  # Путь к изображению картошки
                 'category': category_vegetables,
                 'price': 2.99
             },
@@ -66,8 +68,8 @@ class Command(BaseCommand):
             },
             {
                 'name': 'Яблоки',
-                'description': 'Cочные и сладкие яблоки, полные витаминов',
-                'preview_image': None,
+                'description': 'Сочные и сладкие яблоки, полные витаминов',
+                'preview_image': 'product_images/Яблоко.jpg',  # Путь к изображению яблок
                 'category': category_fruits,
                 'price': 4.99
             },
@@ -100,6 +102,7 @@ class Command(BaseCommand):
                 'price': 1.99
             }
         ]
+
 
         # Создание записей в таблице Product с помощью bulk_create
         product_bulk_list = []
