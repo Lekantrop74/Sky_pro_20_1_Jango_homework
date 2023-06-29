@@ -1,4 +1,7 @@
 from django.core.paginator import Paginator
+from django.urls import reverse_lazy
+from django.views.generic import ListView, CreateView
+
 from .models import Contact, Product, Category
 from django.shortcuts import render, redirect
 
@@ -12,31 +15,23 @@ def index(request):
     return render(request, 'catalog/index.html')
 
 
-def get_contacts(x=None):
-    contacts = Contact.objects.order_by('-id')[:x]
-    context = {
-        'contacts': contacts
-    }
-    return context
+class ContactListView(ListView):
+    model = Contact
+    template_name = 'catalog/contact_page/contact.html'
+    context_object_name = 'contacts'
+    ordering = ['-id']
+    paginate_by = 5
 
 
 def contact(request):
-    if request.method == 'POST':
-        name = request.POST.get('name')
-        email = request.POST.get('email')
-        message = request.POST.get('message')
-
-        # Создаем новый объект Contact с данными из формы
-        contact = Contact(name=name, email=email, message=message)
-        contact.save()
-
-        return redirect('/contact')
-
-    return render(request, 'catalog/contact.html', get_contacts(5))
+    contact_list_view = ContactListView.as_view()
+    return contact_list_view(request)
 
 
-def contact_output(request):
-    return render(request, 'catalog/contact_output.html')
+class ContactCreateView(CreateView):
+    model = Contact
+    fields = ('name', 'email', 'message')
+    success_url = reverse_lazy('contact')
 
 
 def add_data(request):

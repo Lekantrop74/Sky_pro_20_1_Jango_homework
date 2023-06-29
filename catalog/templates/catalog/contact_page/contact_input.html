@@ -13,21 +13,21 @@
 <body>
   <div class="container">
     <h1>Отправка сообщения</h1>
-    <form method="post">
+    <form method="post" action="{% url 'create_contact' %}">
       {% csrf_token %}
-      <div class="input-field">
-        <label for="name">Имя:</label>
-        <input type="text" id="name" name="name" class="validate" required>
+        <div class="input-field col s12">
+          <label for="name">Имя:</label>
+          <input type="text" id="name" name="name" class="validate" required>
       </div>
 
-      <div class="input-field">
-        <label for="email">Email:</label>
-        <input type="email" id="email" name="email" class="validate" required>
-      </div>
+        <div class="input-field col s12">
+          <label for="email">Email:</label>
+          <input type="email" id="email" name="email" class="validate" required>
+        </div>
 
-      <div class="input-field">
-        <label for="message">Сообщение:</label>
-        <textarea id="message" name="message" class="materialize-textarea" required></textarea>
+        <div class="input-field col s12">
+          <label for="message">Сообщение:</label>
+          <textarea id="message" name="message" class="materialize-textarea" required></textarea>
       </div>
 
       <button class="btn waves-effect waves-light" type="submit" name="action">Отправить

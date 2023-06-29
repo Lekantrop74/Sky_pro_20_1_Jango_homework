@@ -26,11 +26,10 @@
   </style>
 </head>
 <body>
+
 	  {% include 'catalog/navbar.html' %}
-      {% include 'catalog/contact_output.html' %}
-      {% include 'catalog/contact_input.html' %}
-
-
+      {% include 'catalog/contact_page/contact_output_list.html' with contacts=contacts %}
+      {% include 'catalog/contact_page/contact_input.html' %}
 
 
   <!-- Подключение библиотеки jQuery -->
