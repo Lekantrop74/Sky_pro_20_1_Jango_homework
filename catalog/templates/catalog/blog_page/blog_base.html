@@ -1,0 +1,25 @@
+
+{% load my_tags %}
+
+{% block content %}
+<!-- Стили для скрытия изображений и подчеркивания текста -->
+<style>
+    .hidden {
+        display: none;
+    }
+    .show-image {
+        color: blue;
+        text-decoration: underline;
+        cursor: pointer;
+    }
+</style>
+
+<!-- Заголовок страницы -->
+{% include 'catalog/blog_page/blog_list.html' %}
+
+<!-- Навигация по страницам -->
+
+
+<!-- Скрипт для показа и скрытия изображений по нажатию на кнопку -->
+
+{% endblock %}

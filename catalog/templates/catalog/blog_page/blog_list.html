@@ -1,0 +1,84 @@
+{% extends 'catalog/product_page/product_base.html' %}
+
+{% load my_tags %}
+
+{% block content %}
+<!-- Стили для скрытия изображений и подчеркивания текста -->
+<style>
+    .hidden {
+        display: none;
+    }
+    .show-image {
+        color: blue;
+        text-decoration: underline;
+        cursor: pointer;
+    }
+</style>
+
+<!-- Заголовок страницы -->
+<h2>Блог</h2>
+
+<!-- Таблица с данными о блоге -->
+<table class="table">
+    <thead>
+        <tr>
+            <th>Заголовок</th>
+            <th>Содержание</th>
+            <th>Превью</th>
+            <th>Дата создания</th>
+            <th>Признак публикации</th>
+            <th>Количество просмотров</th>
+            <th>Действия</th> <!-- Новый столбец для кнопок действий -->
+        </tr>
+    </thead>
+    <tbody>
+        {% for post in blog_posts %}
+        <tr>
+            <td>{{ post.title }}</td>
+            <td>{{ post.content }}</td>
+            <td>
+                {% if post.preview %}
+                    <img src="{{ post.preview.url }}" alt="{{ post.title }}" width="100">
+                {% else %}
+                    No preview image
+                {% endif %}
+            </td>
+            <td>{{ post.created_at }}</td>
+            <td>{{ post.is_published }}</td>
+            <td>{{ post.views_count }}</td>
+            <td>
+                <a href="{% url 'blog_post_detail' post.slug %}">Подробнее</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<!-- Навигация по страницам -->
+<div class="pagination">
+    <span class="step-links">
+        {% if page_obj.has_previous %}
+            <a href="?page=1">&laquo; первая</a>
+            <a href="?page={{ page_obj.previous_page_number }}">&lsaquo; предыдущая</a>
+        {% endif %}
+
+        <span class="current-page">
+            Страница {{ page_obj.number }} из {{ page_obj.paginator.num_pages }}
+        </span>
+
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}">следующая &rsaquo;</a>
+            <a href="?page={{ page_obj.paginator.num_pages }}">последняя &raquo;</a>
+        {% endif %}
+    </span>
+</div>
+
+<!-- Скрипт для показа и скрытия изображений по нажатию на кнопку -->
+<script>
+    $(document).ready(function () {
+        $('.spoiler').click(function () {
+            $(this).next('img').toggleClass('hidden');
+        });
+    });
+</script>
+{% endblock %}

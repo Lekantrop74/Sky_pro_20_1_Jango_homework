@@ -1,0 +1,27 @@
+<!-- blog/post_detail.html -->
+
+{% extends 'catalog/product_page/product_base.html' %}
+
+{% load my_tags %}
+
+{% block content %}
+    <!-- Заголовок страницы -->
+    <h2>{{ blog_post.title }}</h2>
+
+    <!-- Содержание блога -->
+    <div>
+        {{ blog_post.content }}
+    </div>
+
+    <!-- Дата создания -->
+    <p>Дата создания: {{ blog_post.created_at }}</p>
+
+    <!-- Признак публикации -->
+    <p>Признак публикации: {{ blog_post.is_published }}</p>
+
+    <!-- Количество просмотров -->
+    <p>Количество просмотров: {{ blog_post.views_count }}</p>
+
+    <!-- Кнопка для удаления блога -->
+
+{% endblock %}

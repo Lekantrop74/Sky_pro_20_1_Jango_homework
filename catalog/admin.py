@@ -4,7 +4,7 @@ from django.contrib import admin
 
 
 from django.contrib import admin
-from .models import Category, Product, Contact
+from .models import Category, Product, Contact, BlogPost
 
 
 @admin.register(Category)
@@ -22,3 +22,7 @@ class ProductAdmin(admin.ModelAdmin):
 @admin.register(Contact)
 class ContactAdmin(admin.ModelAdmin):
     list_display = ["name"]
+
+@admin.register(BlogPost)
+class ContactAdmin(admin.ModelAdmin):
+    list_display = ["title"]

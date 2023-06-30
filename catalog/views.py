@@ -1,9 +1,11 @@
 from django.core.paginator import Paginator
-from django.urls import reverse_lazy
-from django.views.generic import ListView, CreateView
+
 
 from .models import Contact, Product, Category
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404, redirect
+from django.views.generic import ListView, CreateView, UpdateView, DeleteView
+from django.urls import reverse_lazy
+from .models import BlogPost
 
 
 # Create your views here.
@@ -76,6 +78,45 @@ class ProductListView(ListView):
         # Добавление пагинированного списка продуктов в контекст
         return context
 
+
+
+
+
+class BlogPostListView(ListView):
+    model = BlogPost
+    template_name = 'catalog/blog_page/blog_base.html'
+    context_object_name = 'blog_posts'
+    ordering = ['-created_at']
+    paginate_by = 5
+
+
+class BlogPostCreateView(CreateView):
+    model = BlogPost
+    template_name = 'blog/post_create.html'
+    success_url = reverse_lazy('blog_post_list')
+
+
+class BlogPostUpdateView(UpdateView):
+    model = BlogPost
+    template_name = 'blog/post_update.html'
+    context_object_name = 'blog_post'
+    slug_url_kwarg = 'slug'
+    slug_field = 'slug'
+    success_url = reverse_lazy('blog_post_list')
+
+
+class BlogPostDeleteView(DeleteView):
+    model = BlogPost
+    template_name = 'blog/post_delete.html'
+    context_object_name = 'blog_post'
+    slug_url_kwarg = 'slug'
+    slug_field = 'slug'
+    success_url = reverse_lazy('blog_post_list')
+
+
+def blog_post_detail(request, slug):
+    blog_post = get_object_or_404(BlogPost, slug=slug)
+    return render(request, 'catalog/blog_page/blog_post_detail.html', {'blog_post': blog_post})
 
 # def product_list(request):
 #     # стандартная пагинация не удалил чтобы не искать потом код если нужно будет сделать не через классы
