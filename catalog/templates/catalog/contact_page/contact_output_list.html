@@ -1,51 +1,45 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8">
-  <title>Список контактов</title>
-  <!-- Подключение библиотеки Materialize -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-  <!-- Подключение иконок Material Icons -->
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <meta charset="UTF-8">
+    <title>Список контактов</title>
+    <!-- Подключение библиотеки Materialize -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
 </head>
 <body>
 
-  <div class="container">
+<div class="container">
     <h1>Список контактов</h1>
 
     <table>
-      <thead>
+        <thead>
         <tr>
-          <th>ID</th>
-          <th>Имя</th>
-          <th>Email</th>
-          <th>Сообщение</th>
+            <th>ID</th>
+            <th>Имя</th>
+            <th>Email</th>
+            <th>Сообщение</th>
         </tr>
-      </thead>
-      <tbody>
+        </thead>
+        <tbody>
         {% for contact in contacts %}
         <tr>
-          <td>{{ contact.id }}</td>
-          <td>{{ contact.name }}</td>
-          <td>{{ contact.email }}</td>
-          <td>{{ contact.message }}</td>
+            <td>{{ contact.id }}</td> <!-- Вывод ID контакта -->
+            <td>{{ contact.name }}</td> <!-- Вывод имени контакта -->
+            <td>{{ contact.email }}</td> <!-- Вывод электронной почты контакта -->
+            <td>{{ contact.message }}</td> <!-- Вывод сообщения контакта -->
         </tr>
         {% endfor %}
-      </tbody>
+        </tbody>
     </table>
+</div>
 
-  </div>
+<script>
+$(document).ready(function() {
+M.updateTextFields(); // Обновление стилей полей ввода при загрузке страницы
+});
 
-  <!-- Подключение библиотеки jQuery -->
-  <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-  <!-- Подключение библиотеки Materialize -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-  <!-- Инициализация компонентов Materialize -->
-  <script>
-    $(document).ready(function() {
-      M.updateTextFields();
-    });
-  </script>
+
+</script>
 
 </body>
 </html>

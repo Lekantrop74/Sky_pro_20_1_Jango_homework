@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Домашняя страница</title>
+</head>
+<body>
+<div id="navbar-container"></div>
+
+<h1>Добро пожаловать на наш сайт!</h1>
+<p>Навигация:</p>
+<ul>
+    <li class="nav-item">
+        <a class="nav-link" href="{% url 'index' %}">Приветствие</a> <!-- Ссылка на страницу "Приветствие" -->
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="{% url 'contact' %}">Контакты</a> <!-- Ссылка на страницу "Контакты" -->
+    </li>
+</ul>
+</body>
+</html>
+
+<script>
+  // Используйте AJAX или другой метод для получения данных представления navbar
+  fetch('/navbar/') // Отправляем запрос на получение данных для навигационного меню
+    .then(response => response.text()) // Преобразуем ответ в текст
+    .then(data => {
+      // Вставляем полученный HTML-код в контейнер с идентификатором "navbar-container"
+      document.getElementById('navbar-container').innerHTML = data;
+    })
+    .catch(error => {
+      console.error('Ошибка при получении данных: ', error); // Обрабатываем возможную ошибку при получении данных
+    });
+
+</script>

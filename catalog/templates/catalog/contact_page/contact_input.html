@@ -1,51 +1,42 @@
 <!DOCTYPE html>
 <html lang="ru">
 
-<head>
-  <meta charset="UTF-8">
-  <title>Отправка сообщения</title>
-  <!-- Подключение библиотеки Materialize -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-  <!-- Подключение иконок Material Icons -->
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-</head>
-
 <body>
-  <div class="container">
-    <h1>Отправка сообщения</h1>
+<div class="container">
+    <h5>Отправка сообщения</h5>
+    <!-- Форма для отправки сообщения -->
     <form method="post" action="{% url 'create_contact' %}">
-      {% csrf_token %}
+        {% csrf_token %}
         <div class="input-field col s12">
-          <label for="name">Имя:</label>
-          <input type="text" id="name" name="name" class="validate" required>
-      </div>
-
-        <div class="input-field col s12">
-          <label for="email">Email:</label>
-          <input type="email" id="email" name="email" class="validate" required>
+            <label for="name">Имя:</label>
+            <input type="text" id="name" name="name" class="validate" required>
+            <!-- Поле для ввода имени с обязательным заполнением -->
         </div>
 
         <div class="input-field col s12">
-          <label for="message">Сообщение:</label>
-          <textarea id="message" name="message" class="materialize-textarea" required></textarea>
-      </div>
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" class="validate" required>
+            <!-- Поле для ввода электронной почты с обязательным заполнением -->
+        </div>
 
-      <button class="btn waves-effect waves-light" type="submit" name="action">Отправить
-        <i class="material-icons right">send</i>
-      </button>
+        <div class="input-field col s12">
+            <label for="message">Сообщение:</label>
+            <textarea id="message" name="message" class="materialize-textarea" required></textarea>
+            <!-- Поле для ввода сообщения с обязательным заполнением -->
+        </div>
+
+        <button class="btn waves-effect waves-light" type="submit" name="action">Отправить
+            <i class="material-icons right">send</i>
+        </button>
     </form>
-  </div>
+</div>
 
-  <!-- Подключение библиотеки jQuery -->
-  <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-  <!-- Подключение библиотеки Materialize -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-  <!-- Инициализация компонентов Materialize -->
-  <script>
-    $(document).ready(function() {
-      M.updateTextFields();
-    });
-  </script>
+<script>
+$(document).ready(function() {
+M.updateTextFields(); // Обновление стилей полей ввода при загрузке страницы
+});
+
+</script>
 </body>
 
 </html>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Добавление продукта</title>
+    <!-- Подключение библиотеки Materialize -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <!-- Подключение иконок Material Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+
+</head>
+
+<body>
+<form method="post" onsubmit="redirectToFormData(event)">
+    {% csrf_token %}
+
+    <div class="btn-wrapper">
+        <button class="btn cyan waves-effect waves-light" type="submit" name="action">Добавить
+            <i class="material-icons left">add</i>
+        </button>
+    </div>
+</form>
+
+
+<script>
+    function redirectToFormData(event) {
+      event.preventDefault(); // Отменить отправку формы
+
+      window.location.href = "product_add_data/";
+    }
+
+</script>
+</body>
+
+</html>
