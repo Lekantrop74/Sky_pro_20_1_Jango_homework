@@ -1,7 +1,12 @@
 <!DOCTYPE html>
 <html lang="ru">
+{% load static %}
 
 <head>
+
+    {% block ccs_add %}
+    <link rel="stylesheet" href="{% static 'catalog/css/style.css' %}">
+{% endblock %}
     <meta charset="UTF-8">
     <title>Данные Контакта</title>
     <!-- Подключение иконок Material Icons -->

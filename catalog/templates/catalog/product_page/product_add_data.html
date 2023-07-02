@@ -1,8 +1,10 @@
 <!DOCTYPE html>
 <html lang="ru">
-
+{% load static %}
 
 <head>
+    <link rel="stylesheet" href="{% static 'catalog/css/style.css' %}">
+
     <meta charset="UTF-8">
     <title>Создание продукта</title>
     <!-- Подключение библиотеки Materialize -->
@@ -10,20 +12,10 @@
     <!-- Подключение иконок Material Icons -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
-    <style>
-  /* Фикс для выпадающего списка */
-  .select-wrapper input.select-dropdown {
-    padding-right: 2rem;
-  }
-
-    </style>
-
 </head>
-
 <body>
 <div class="container">
     <h1>Создание продукта</h1>
-
     <!-- Back Button -->
     <a href="../" class="btn waves-effect waves-light">Назад</a>
     <form method="post" enctype="multipart/form-data">
@@ -31,30 +23,30 @@
 
         <!-- Наименование -->
         <div class="input-field">
-            <label for="name">Наименование:</label>
             <input type="text" id="name" name="name" class="validate" required>
+            <label for="name">Наименование:</label>
         </div>
 
         <!-- Описание -->
         <div class="input-field">
-            <label for="description">Описание:</label>
             <textarea id="description" name="description" class="materialize-textarea" required></textarea>
+            <label for="description">Описание:</label>
         </div>
 
         <!-- Категория -->
         <div class="input-field">
-            <label for="category"></label>
             <select id="category" name="category" required>
                 {% for category in categories %}
                 <option value="{{ category.id }}">{{ category.name }}</option>
                 {% endfor %}
             </select>
+            <label for="category">Категория:</label>
         </div>
 
         <!-- Цена -->
         <div class="input-field">
-            <label for="price">Цена:</label>
             <input type="number" id="price" name="price" step="1" min="0" required>
+            <label for="price">Цена:</label>
         </div>
 
         <!-- Изображение продукта -->
@@ -72,8 +64,6 @@
             <i class="material-icons right">send</i>
         </button>
     </form>
-
-
 </div>
 
 <!-- Подключение библиотеки jQuery -->
@@ -82,11 +72,9 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 <!-- Инициализация компонентов Materialize -->
 <script>
-    $(document).ready(function() {
-      $('select').formSelect();
+    $(document).ready(function () {
+        $('select').formSelect();
     });
-
 </script>
 </body>
-
 </html>

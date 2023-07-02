@@ -1,0 +1,17 @@
+{% extends 'catalog/product_page/product_base.html' %}
+
+{% load my_tags %}
+
+{% block content %}
+<h2>Редактирование блога</h2>
+
+<a href="{% url 'blog_base_page' %}" class="btn waves-effect waves-light">Назад</a>
+
+
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Сохранить</button>
+</form>
+
+{% endblock %}

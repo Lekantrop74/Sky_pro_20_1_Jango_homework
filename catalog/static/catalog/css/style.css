@@ -1,0 +1,163 @@
+.hidden {
+    display: none;
+}
+
+.show-image {
+    color: blue;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+/* Стили для таблицы */
+.table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.table th,
+.table td {
+    padding: 8px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+/* Стили для кнопок */
+.btn {
+    display: inline-block;
+    padding: 8px 12px;
+    background-color: #4caf50;
+    color: #fff;
+    border: none;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.btn:hover {
+    background-color: #45a049;
+}
+
+/* Стили для навигации по страницам */
+.pagination {
+    margin-top: 16px;
+    text-align: center;
+}
+
+.pagination a {
+    display: inline-block;
+    padding: 8px;
+    background-color: #f1f1f1;
+    color: #555;
+    border: 1px solid #ddd;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.pagination a:hover {
+    background-color: #ddd;
+}
+
+.pagination .current-page {
+    font-weight: bold;
+}
+
+/* Стили для скрытия изображений и подчеркивания текста */
+.hidden {
+    display: none;
+}
+
+/* Дополнительные стили для кнопок */
+.btn {
+    display: inline-block;
+    padding: 8px 12px;
+    background-color: #4caf50;
+    color: #fff;
+    border: none;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.select-wrapper input.select-dropdown {
+    padding-right: 2rem;
+}
+
+/* Кастомные стили для формы */
+.container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+h1 {
+    text-align: center;
+}
+
+form {
+    margin-top: 20px;
+}
+
+.input-field label {
+    font-size: 1rem;
+}
+
+.input-field input[type="text"],
+.input-field textarea.materialize-textarea {
+    font-size: 1rem;
+}
+
+.input-field .prefix {
+    font-size: 1rem;
+}
+
+.file-field .btn {
+    font-size: 1rem;
+}
+
+.file-field .file-path-wrapper {
+    margin-bottom: 0;
+}
+
+button.btn.waves-effect.waves-light {
+    margin-top: 20px;
+}
+        /* Кастомные стили для формы */
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        form {
+            margin-top: 20px;
+        }
+
+        .input-field label {
+            font-size: 1rem;
+        }
+
+        .input-field input[type="text"],
+        .input-field textarea.materialize-textarea {
+            font-size: 1rem;
+        }
+
+        .input-field .prefix {
+            font-size: 1rem;
+        }
+
+        .file-field .btn {
+            font-size: 1rem;
+        }
+
+        .file-field .file-path-wrapper {
+            margin-bottom: 0;
+        }
+
+        button.btn.waves-effect.waves-light {
+            margin-top: 20px;
+        }

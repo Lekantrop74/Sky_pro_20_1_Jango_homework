@@ -1,18 +1,18 @@
 
 {% load my_tags %}
+{% load static %}
+
+
+
+<head>
+    {% block ccs_add %}
+    <link rel="stylesheet" href="{% static 'catalog/css/style.css' %}">
+{% endblock %}
+
+</head>
 
 {% block content %}
 <!-- Стили для скрытия изображений и подчеркивания текста -->
-<style>
-    .hidden {
-        display: none;
-    }
-    .show-image {
-        color: blue;
-        text-decoration: underline;
-        cursor: pointer;
-    }
-</style>
 
 <!-- Заголовок страницы -->
 {% include 'catalog/blog_page/blog_list.html' %}

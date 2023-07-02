@@ -53,9 +53,6 @@ class Contact(models.Model):
         return self.name
 
 
-from django.db import models
-
-
 class BlogPost(models.Model):
     title = models.CharField(max_length=255, verbose_name="Заголовок")
     slug = models.CharField(max_length=255, unique=True, verbose_name="Slug")

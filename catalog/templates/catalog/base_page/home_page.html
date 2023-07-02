@@ -20,15 +20,15 @@
 </html>
 
 <script>
-  // Используйте AJAX или другой метод для получения данных представления navbar
-  fetch('/navbar/') // Отправляем запрос на получение данных для навигационного меню
-    .then(response => response.text()) // Преобразуем ответ в текст
-    .then(data => {
-      // Вставляем полученный HTML-код в контейнер с идентификатором "navbar-container"
-      document.getElementById('navbar-container').innerHTML = data;
-    })
-    .catch(error => {
-      console.error('Ошибка при получении данных: ', error); // Обрабатываем возможную ошибку при получении данных
-    });
+    // Используйте AJAX или другой метод для получения данных представления navbar
+    fetch('/navbar/') // Отправляем запрос на получение данных для навигационного меню
+        .then(response => response.text()) // Преобразуем ответ в текст
+        .then(data => {
+            // Вставляем полученный HTML-код в контейнер с идентификатором "navbar-container"
+            document.getElementById('navbar-container').innerHTML = data;
+        })
+        .catch(error => {
+            console.error('Ошибка при получении данных: ', error); // Обрабатываем возможную ошибку при получении данных
+        });
 
 </script>

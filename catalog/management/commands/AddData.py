@@ -3,7 +3,6 @@ from catalog.models import Category, Product
 import os
 
 
-
 class Command(BaseCommand):
 
     def handle(self, *args, **options):
@@ -102,7 +101,6 @@ class Command(BaseCommand):
                 'price': 1.99
             }
         ]
-
 
         # Создание записей в таблице Product с помощью bulk_create
         product_bulk_list = []
