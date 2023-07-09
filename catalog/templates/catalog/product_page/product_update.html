@@ -1,0 +1,83 @@
+{% extends 'catalog/product_page/product_base.html' %}
+
+{% load my_tags %}
+
+{% block content %}
+<!-- Заголовок страницы -->
+<h2>Редактирование продукта: {{ product.name }}</h2>
+<a href="{% url 'product_list_base' %}" class="btn waves-effect waves-light">Назад</a>
+
+<!-- Форма для редактирования продукта -->
+{% block form_errors %}
+{% if form.non_field_errors %}
+<div class="alert alert-danger">
+    <ul>
+        {% for error in form.non_field_errors %}
+        <li>{{ error }}</li>
+        {% endfor %}
+    </ul>
+</div>
+{% endif %}
+{% endblock form_errors %}
+
+<div class="row">
+    <div class="col-md-6">
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.as_p }}
+    </div>
+
+
+    <!-- Форма для создания версии продукта -->
+    <div class="col-md-6">
+        <h3>Создание версии продукта</h3>
+        {{ formset.management_form }}
+        {% for form in formset %}
+        <div class="version-form">
+            <div class="form-group">
+                {{ form.id }}
+                <div class="form-row">
+                    <div class="col-6">
+                        {{ form.version_number.label_tag }}
+                        {{ form.version_number }}
+                    </div>
+                    <div class="col-6">
+                        {{ form.version_name.label_tag }}
+                        {{ form.version_name }}
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-sm-9 offset-sm-3">
+                    <div class="form-check form-check-inline">
+                        <div class="form-group">
+                            {{ form.is_active }}
+                            <label class="form-check-label">{{ form.is_active.label }}</label>
+                        </div>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <div class="form-group">
+                            {{ form.DELETE }}
+                            <label class="form-check-label">Удалить</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <hr>
+        </div>
+        {% endfor %}
+
+        {% if formset.non_form_errors %}
+        <div class="alert alert-danger">
+            {% for error in formset.non_form_errors %}
+            {{ error }}
+            {% endfor %}
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+<button class="btn waves-effect waves-light" type="submit">Сохранить изменения</button>
+</form>
+
+{% endblock %}

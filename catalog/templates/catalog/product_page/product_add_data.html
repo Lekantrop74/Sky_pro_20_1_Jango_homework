@@ -4,75 +4,54 @@
 
 <head>
     <link rel="stylesheet" href="{% static 'catalog/css/style.css' %}">
-
     <meta charset="UTF-8">
     <title>Создание продукта</title>
-    <!-- Подключение библиотеки Materialize -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-    <!-- Подключение иконок Material Icons -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-
 </head>
+
 <body>
 <div class="container">
     <h1>Создание продукта</h1>
-    <!-- Back Button -->
     <a href="../" class="btn waves-effect waves-light">Назад</a>
     <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
-
-        <!-- Наименование -->
+        {% for field in form %}
         <div class="input-field">
-            <input type="text" id="name" name="name" class="validate" required>
-            <label for="name">Наименование:</label>
-        </div>
-
-        <!-- Описание -->
-        <div class="input-field">
-            <textarea id="description" name="description" class="materialize-textarea" required></textarea>
-            <label for="description">Описание:</label>
-        </div>
-
-        <!-- Категория -->
-        <div class="input-field">
-            <select id="category" name="category" required>
-                {% for category in categories %}
-                <option value="{{ category.id }}">{{ category.name }}</option>
+            {% if field.name == "preview_image" %}
+            <div class="file-field">
+                <div class="btn">
+                    <span>Выбрать изображение</span>
+                    {{ field }}
+                </div>
+                <div class="file-path-wrapper">
+                    <input class="file-path validate" type="text">
+                </div>
+            </div>
+            {% else %}
+            {{ field.label_tag }}
+            {{ field }}
+            {% endif %}
+            {% if field.errors %}
+            <div class="errors">
+                {% for error in field.errors %}
+                <p>{{ error }}</p>
                 {% endfor %}
-            </select>
-            <label for="category">Категория:</label>
-        </div>
-
-        <!-- Цена -->
-        <div class="input-field">
-            <input type="number" id="price" name="price" step="1" min="0" required>
-            <label for="price">Цена:</label>
-        </div>
-
-        <!-- Изображение продукта -->
-        <div class="file-field input-field">
-            <div class="btn">
-                <span>Выбрать изображение</span>
-                <input type="file" id="preview_image" name="preview_image" accept="image/*">
             </div>
-            <div class="file-path-wrapper">
-                <input class="file-path validate" type="text">
-            </div>
+            {% endif %}
         </div>
-
+        {% endfor %}
         <button class="btn waves-effect waves-light" type="submit" name="action">Сохранить
             <i class="material-icons right">send</i>
         </button>
     </form>
 </div>
 
-<!-- Подключение библиотеки jQuery -->
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-<!-- Подключение библиотеки Materialize -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-<!-- Инициализация компонентов Materialize -->
 <script>
     $(document).ready(function () {
+        // Инициализация Materialize Select
         $('select').formSelect();
     });
 </script>

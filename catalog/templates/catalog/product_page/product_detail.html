@@ -1,0 +1,60 @@
+{% extends 'catalog/product_page/product_base.html' %}
+
+{% load my_tags %}
+
+{% block content %}
+
+<h2>Продукт: {{ product.name }}</h2>
+
+<!-- Данные о продукте -->
+<table class="table">
+    <a href="{% url 'product_list_base' %}" class="btn waves-effect waves-light">Назад</a>
+
+    <tbody>
+    <tr>
+        <th>Наименование</th>
+        <td>{{ product.name }}</td>
+    </tr>
+    <tr>
+        <th>Описание</th>
+        <td>{{ product.description }}</td>
+    </tr>
+    <tr>
+        <th>Изображение продукта</th>
+        <td>
+            {% if product.preview_image %}
+            <img src="{{ product.preview_image.url }}" alt="{{ product.name }}">
+            {% else %}
+            No image
+            {% endif %}
+        </td>
+    </tr>
+    <tr>
+        <th>Категория</th>
+        <td>{{ product.category.name }}</td>
+    </tr>
+    <tr>
+        <th>Цена</th>
+        <td>{{ product.price }}</td>
+    </tr>
+    <tr>
+        <th>Дата создания</th>
+        <td>{{ product.created_at }}</td>
+    </tr>
+    <tr>
+        <th>Дата последнего обновления</th>
+        <td>{{ product.updated_at }}</td>
+    </tr>
+    <tr>
+        <th>Активные версии</th>
+        <td>
+            {% for version in product.version_set.all %}
+                {% if version.is_active %}
+                    {{ version.version_name }}
+                {% endif %}
+            {% endfor %}
+        </td>
+    </tr>
+    </tbody>
+</table>
+{% endblock %}

@@ -1,12 +1,14 @@
 from django.core.paginator import Paginator
+from django.db.models import Prefetch
+from django.forms import inlineformset_factory
 from django.template.defaultfilters import slugify
 from unidecode import unidecode
 
-from .forms import BlogPostFilterForm, BlogPostForm
-from .models import Contact, Product, Category
+from .forms import BlogPostFilterForm, BlogPostForm, ProductForm, ProductVersion
+from .models import Contact, Product, Version
 from django.shortcuts import render
-from django.views.generic import ListView, CreateView, UpdateView, DeleteView, DetailView
-from django.urls import reverse_lazy
+from django.views.generic import ListView, CreateView, UpdateView, DeleteView, DetailView, FormView
+from django.urls import reverse_lazy, reverse
 from .models import BlogPost
 
 
@@ -46,22 +48,23 @@ class ContactCreateView(CreateView):
     success_url = reverse_lazy('contact')
 
 
-class AddDataView(CreateView):
-    model = Product
-    fields = ('name', 'description', 'preview_image', 'category', 'price')
-    template_name = 'catalog/product_page/product_add_data.html'
-    success_url = '/base'
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['categories'] = Category.objects.all()
-        # Получение всех категорий товаров и добавление их в контекст
-        return context
-
-
 def base(request):
     # Отображение базовой страницы продуктов
     return render(request, 'catalog/product_page/product_base.html')
+
+
+class AddDataView(FormView):
+    template_name = 'catalog/product_page/product_add_data.html'
+    form_class = ProductForm
+    success_url = reverse_lazy('product_list_base')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        return context
+
+    def form_valid(self, form):
+        form.save()
+        return super().form_valid(form)
 
 
 class ProductListView(ListView):
@@ -71,14 +74,63 @@ class ProductListView(ListView):
     context_object_name = 'page_obj'
 
     def get_queryset(self):
-        return Product.objects.order_by('-created_at')
-        # Получение списка продуктов, отсортированных по убыванию даты создания
+        return Product.objects.order_by('-created_at').prefetch_related(
+            Prefetch('version_set', queryset=Version.objects.filter(is_active=True), to_attr='active_version')
+        )
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['page_obj'] = Paginator(self.get_queryset(), self.paginate_by).get_page(self.request.GET.get('page'))
-        # Добавление пагинированного списка продуктов в контекст
         return context
+
+
+class ProductDetailView(DetailView):
+    model = Product
+    template_name = 'catalog/product_page/product_detail.html'
+    context_object_name = 'product'
+
+
+class ProductUpdateView(UpdateView):
+    model = Product
+    template_name = 'catalog/product_page/product_update.html'
+    form_class = ProductForm
+
+    def get_success_url(self):
+        return reverse('product_update', args=[self.object.pk])
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        VersionFormSet = inlineformset_factory(Product, Version, form=ProductVersion, extra=1)
+        if self.request.POST:
+            formset = VersionFormSet(self.request.POST, instance=self.object, prefix='version')
+        else:
+            formset = VersionFormSet(instance=self.object, prefix='version')
+
+        context['formset'] = formset
+
+        return context
+
+    def form_valid(self, form):
+        context = self.get_context_data()
+        formset = context['formset']
+
+        if formset.is_valid():
+            self.object = form.save()
+            formset.instance = self.object
+            formset.save()
+
+        return super().form_valid(form)
+
+
+class ProductPostDeleteView(DeleteView):
+    """
+    Класс представления для удаления блога.
+    Отображает подтверждающий экран удаления блога и удаляет блог при подтверждении.
+    """
+    model = Product
+    template_name = 'catalog/product_page/product_delete.html'
+    context_object_name = 'product'
+    success_url = reverse_lazy('product_list_base')
 
 
 class BlogPostListView(ListView):
@@ -201,7 +253,6 @@ class BlogPostDetailView(DetailView):
         self.object.save()
         context = self.get_context_data(object=self.object)
         return self.render_to_response(context)
-
 
 # def product_list(request):
 #     # стандартная пагинация не удалил чтобы не искать потом код если нужно будет сделать не через классы

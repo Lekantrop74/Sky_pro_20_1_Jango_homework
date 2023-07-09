@@ -1,0 +1,13 @@
+{% extends 'catalog/product_page/product_base.html' %}
+
+{% block content %}
+    <h2>Удаление записи блога</h2>
+
+    <p>Вы уверены, что хотите удалить продукт "{{ product.name }}"?</p>
+
+    <form id="delete-form" action="{% url 'product_delete' pk=product.pk %}" method="post">
+        {% csrf_token %}
+        <button id="delete-button" type="submit">Удалить</button>
+        <a href="{% url 'product_list_base' %}">Отмена</a>
+    </form>
+{% endblock %}

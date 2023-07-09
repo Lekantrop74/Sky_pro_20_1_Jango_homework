@@ -22,6 +22,7 @@
         <th>Цена</th>
         <th>Дата создания</th>
         <th>Дата последнего обновления</th>
+        <th>Активная версия</th>
     </tr>
     </thead>
     <tbody>
@@ -47,6 +48,21 @@
         <td>{{ product.price }}</td>
         <td>{{ product.created_at }}</td>
         <td>{{ product.updated_at }}</td>
+        <td>
+            {% if product.active_version %}
+            {{ product.active_version.0.version_name }}
+            {% else %}
+            Нет активной версии
+            {% endif %}
+        </td>
+        <td>
+            <a href="{% url 'product_detail' pk=product.pk %}" title="Подробнее">&#128269;</a>
+            <a href="{% url 'product_update' pk=product.pk %}" title="Редактировать">&#9998;</a>
+            <a href="{% url 'product_delete' pk=product.pk %}" title="Удалить">&#128465;</a>
+
+
+        </td>
+
     </tr>
     {% endfor %}
     </tbody>

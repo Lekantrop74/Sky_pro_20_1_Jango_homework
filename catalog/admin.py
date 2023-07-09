@@ -4,7 +4,7 @@ from django.contrib import admin
 
 
 from django.contrib import admin
-from .models import Category, Product, Contact, BlogPost
+from .models import Category, Product, Contact, BlogPost, Version
 
 
 @admin.register(Category)
@@ -26,3 +26,7 @@ class ContactAdmin(admin.ModelAdmin):
 @admin.register(BlogPost)
 class ContactAdmin(admin.ModelAdmin):
     list_display = ["title"]
+
+@admin.register(Version)
+class ContactAdmin(admin.ModelAdmin):
+    list_display = ["version_name"]
