@@ -80,3 +80,6 @@ class ProductVersion(forms.ModelForm):
             if active_count > 0 and not self.instance.is_active:
                 raise forms.ValidationError('Может быть только одна активная версия продукта.')
         return is_active
+
+class ProductFilterForm(forms.Form):
+    is_published = forms.BooleanField(label='Только активные', required=False)
