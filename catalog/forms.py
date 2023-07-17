@@ -81,5 +81,18 @@ class ProductVersion(forms.ModelForm):
                 raise forms.ValidationError('Может быть только одна активная версия продукта.')
         return is_active
 
+    def form_valid(self, form):
+        context = self.get_context_data()
+        formset = context['formset']
+
+        if formset.is_valid():
+            count_active = len([f for f in formset if f.cleaned_data.get('is_active') is True])
+            if count_active <= 1:
+                self.object = form.save()
+                formset.instance = self.object
+                formset.save()
+
+        return super().form_valid(form)
+
 class ProductFilterForm(forms.Form):
     is_published = forms.BooleanField(label='Только активные', required=False)

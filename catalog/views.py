@@ -76,7 +76,7 @@ class ProductListView(ListView):
     def get_queryset(self):
         return Product.objects.order_by('-created_at').prefetch_related(
             Prefetch('version_set', queryset=Version.objects.filter(is_active=True), to_attr='active_version')
-        ).filter(version__is_active=True)  # Filter products with active versions
+        ).filter()  # Filter products with active versions
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
