@@ -23,6 +23,8 @@
         <th>Дата создания</th>
         <th>Дата последнего обновления</th>
         <th>Активная версия</th>
+        <th>Владелец</th>
+
     </tr>
     </thead>
     <tbody>
@@ -37,7 +39,7 @@
             <!-- Кнопка "Показать изображение" -->
             <span class="spoiler show-image">Показать изображение</span>
             <!-- Изображение продукта (скрытое) -->
-            <img src="{% mediapath product.preview_image %}" alt="{{ product.name }}" class="hidden">
+            <img alt="{{ product.name }}" class="hidden" src="{% mediapath product.preview_image %}">
         </td>
         <!-- Если превью изображения нет, то выводим сообщение -->
         {% else %}
@@ -48,13 +50,13 @@
         <td>{{ product.price }}</td>
         <td>{{ product.created_at }}</td>
         <td>{{ product.updated_at }}</td>
+
         <td>
-            {% if product.active_version %}
-            {{ product.active_version.0.version_name }}
-            {% else %}
-            Нет активной версии
-            {% endif %}
+            {{ product.active_version.0.version_name|default:'-' }}
+
         </td>
+        <td>{{ product.owner|default:'-' }}</td>
+
         <td>
             <a href="{% url 'product_detail' pk=product.pk %}" title="Подробнее">&#128269;</a>
             <a href="{% url 'product_update' pk=product.pk %}" title="Редактировать">&#9998;</a>

@@ -1,6 +1,5 @@
 {% include 'catalog/base_page/navbar.html' %}
 
-
 {% load static %}
 <head>
     <link rel="stylesheet" href="{% static 'catalog/css/style.css' %}">
@@ -9,15 +8,12 @@
     <title>Регистрация </title>
 </head>
 
-
-</head>
-
 <div class="container">
     <h1>Регистрация</h1>
 
     <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
-        {{form.as_p}}
+        {{ form.as_p }}
 
         <div class="row">
             <div class="input-field col s12">
@@ -32,3 +28,4 @@
             M.AutoInit();
         });
     </script>
+</div>

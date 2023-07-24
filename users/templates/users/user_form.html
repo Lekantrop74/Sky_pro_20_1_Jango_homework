@@ -4,16 +4,16 @@
 {% load static %}
 <head>
     <link href="{% static 'catalog/css/style.css' %}" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" rel="stylesheet">
+    <!--    <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" rel="stylesheet">-->
     <meta charset="UTF-8">
-    <title>Войти </title>
+    <title>Профиль </title>
 </head>
 
 
 </head>
 
 <div class="container">
-    <h1>Войти</h1>
+    <h1>Профиль</h1>
 
     <form enctype="multipart/form-data" method="post">
         {% csrf_token %}
@@ -21,7 +21,12 @@
 
         <div class="row">
             <div class="input-field col s12">
-                <button class="btn waves-effect waves-light" name="action" type="submit">Отправить</button>
+                <button class="btn waves-effect waves-light" name="action" type="submit">Сохранить</button>
+            </div>
+        </div>
+        <div class="row">
+            <div class="input-field col s12">
+                <a class="btn waves-effect waves-light" href="{%url 'users:generate_new_password'%}">Изменить пароль</a>
             </div>
         </div>
     </form>

@@ -1,9 +1,9 @@
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 <!-- Подключаем JS для выплывающего меню -->
 
 <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
     <a class="navbar-brand" href="#">Магазин</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+    <button class="navbar-toggler" data-target="#collapsibleNavbar" data-toggle="collapse" type="button">
         <span class="navbar-toggler-icon"></span>
     </button>
 
@@ -16,6 +16,7 @@
 
 
             {%if user.is_authenticated%}
+            <li><a class="nav-link" href="{% url 'users:profile' %}">Профиль</a></li>
             <li><a class="nav-link" href="{% url 'users:logout' %}">Выйти</a></li>
             {%else%}
             <li><a class="nav-link" href="{% url 'users:login' %}">Войти</a></li>

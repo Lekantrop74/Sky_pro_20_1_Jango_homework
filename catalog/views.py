@@ -54,6 +54,7 @@ def base(request):
 
 
 class AddDataView(FormView):
+    model = Product
     template_name = 'catalog/product_page/product_add_data.html'
     form_class = ProductForm
     success_url = reverse_lazy('product_list_base')
@@ -63,7 +64,9 @@ class AddDataView(FormView):
         return context
 
     def form_valid(self, form):
-        form.save()
+        self.object = form.save()
+        self.object.owner = self.request.user
+        self.object.save()
         return super().form_valid(form)
 
 
