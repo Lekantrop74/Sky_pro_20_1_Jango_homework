@@ -140,5 +140,5 @@ EMAIL_PORT = 465
 EMAIL_USE_TLS = False
 EMAIL_USE_SSL = True
 EMAIL_HOST_USER = 'lekantrop75@yandex.ru'
-EMAIL_HOST_PASSWORD = 'ejhjdzmkjphoskut'
+EMAIL_HOST_PASSWORD = '*'
 DEFAULT_FROM_EMAIL = 'lekantrop75@yandex.ru'
