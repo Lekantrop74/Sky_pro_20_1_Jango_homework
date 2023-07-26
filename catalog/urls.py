@@ -2,7 +2,7 @@ from django.urls import path
 from django.views.generic import RedirectView
 
 from catalog.views import index, contact, home_page, ContactCreateView, AddDataView, ProductListView, navbar, \
-    BlogPostDetailView, ProductDetailView, ProductUpdateView, ProductPostDeleteView
+    BlogPostDetailView, ProductDetailView, ProductUpdateView, ProductDeleteView
 from .views import (
     BlogPostListView,
     BlogPostCreateView,
@@ -23,7 +23,7 @@ urlpatterns = [
     path('base/', ProductListView.as_view(), name='product_list_base'),
     path('base/product_detail/<int:pk>/', ProductDetailView.as_view(), name='product_detail'),
     path('base/product_update/<int:pk>/', ProductUpdateView.as_view(), name='product_update'),
-    path('base/product_delete/<int:pk>/', ProductPostDeleteView.as_view(), name='product_delete'),
+    path('base/product_delete/<int:pk>/', ProductDeleteView.as_view(), name='product_delete'),
 
     path('blog_page/blog_base/', BlogPostListView.as_view(), name='blog_base_page'),
     path('blog_page/blog_post_detail/<slug:slug>/', BlogPostDetailView.as_view(), name='blog_post_detail'),

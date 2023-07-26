@@ -15,12 +15,15 @@
 <body>
 <form method="post" onsubmit="redirectToFormData(event)">
     {% csrf_token %}
+    {% if perms.catalog.add_product%}
 
     <div class="btn-wrapper">
         <button class="btn cyan waves-effect waves-light" type="submit" name="action">Добавить
             <i class="material-icons left">add</i>
         </button>
     </div>
+    {% endif %}
+
 </form>
 
 
@@ -30,6 +33,7 @@
 
         window.location.href = "product_add_data/";
     }
+
 
 </script>
 </body>

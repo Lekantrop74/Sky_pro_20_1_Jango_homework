@@ -58,9 +58,18 @@
         <td>{{ product.owner|default:'-' }}</td>
 
         <td>
+
+            {% if perms.catalog.view_product%}
             <a href="{% url 'product_detail' pk=product.pk %}" title="Подробнее">&#128269;</a>
+            {% endif %}
+
+            {% if perms.catalog.change_product%}
             <a href="{% url 'product_update' pk=product.pk %}" title="Редактировать">&#9998;</a>
+            {% endif %}
+
+            {% if user.is_superuser%}
             <a href="{% url 'product_delete' pk=product.pk %}" title="Удалить">&#128465;</a>
+            {% endif %}
 
 
         </td>
@@ -96,5 +105,8 @@
             $(this).next('img').toggleClass('hidden');
         });
     });
+
+
+
 </script>
 {% endblock %}

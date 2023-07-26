@@ -1,3 +1,5 @@
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin, UserPassesTestMixin
 from django.core.paginator import Paginator
 from django.db.models import Prefetch
 from django.forms import inlineformset_factory
@@ -28,7 +30,7 @@ def navbar(request):
     return render(request, 'catalog/base_page/navbar.html')
 
 
-class ContactListView(ListView):
+class ContactListView(LoginRequiredMixin, ListView):
     model = Contact
     template_name = 'catalog/contact_page/contact.html'
     context_object_name = 'contacts'
@@ -36,13 +38,14 @@ class ContactListView(ListView):
     paginate_by = 5
 
 
+@login_required
 def contact(request):
     contact_list_view = ContactListView.as_view()
     # Обработчик запроса для страницы контактов
     return contact_list_view(request)
 
 
-class ContactCreateView(CreateView):
+class ContactCreateView(LoginRequiredMixin, CreateView):
     model = Contact
     fields = ('name', 'email', 'message')
     success_url = reverse_lazy('contact')
@@ -53,9 +56,10 @@ def base(request):
     return render(request, 'catalog/product_page/product_base.html')
 
 
-class AddDataView(FormView):
+class AddDataView(LoginRequiredMixin, PermissionRequiredMixin, FormView):
     model = Product
     template_name = 'catalog/product_page/product_add_data.html'
+    permission_required = 'catalog.add_product'
     form_class = ProductForm
     success_url = reverse_lazy('product_list_base')
 
@@ -93,8 +97,9 @@ class ProductDetailView(DetailView):
     context_object_name = 'product'
 
 
-class ProductUpdateView(UpdateView):
+class ProductUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
     model = Product
+    permission_required = 'catalog.change_product'
     template_name = 'catalog/product_page/product_update.html'
     form_class = ProductForm
 
@@ -125,15 +130,14 @@ class ProductUpdateView(UpdateView):
         return super().form_valid(form)
 
 
-class ProductPostDeleteView(DeleteView):
-    """
-    Класс представления для удаления блога.
-    Отображает подтверждающий экран удаления блога и удаляет блог при подтверждении.
-    """
+class ProductDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Product
     template_name = 'catalog/product_page/product_delete.html'
     context_object_name = 'product'
     success_url = reverse_lazy('product_list_base')
+
+    def test_func(self):
+        return self.request.is_superuser
 
 
 class BlogPostListView(ListView):
@@ -167,7 +171,7 @@ class BlogPostListView(ListView):
         return queryset
 
 
-class BlogPostCreateView(CreateView):
+class BlogPostCreateView(LoginRequiredMixin, CreateView):
     """
     Класс представления для создания блога.
     Отображает форму создания блога и сохраняет данные блога при успешной валидации формы.
@@ -197,7 +201,7 @@ class BlogPostCreateView(CreateView):
         return super().form_valid(form)
 
 
-class BlogPostUpdateView(UpdateView):
+class BlogPostUpdateView(LoginRequiredMixin, UpdateView):
     """
     Класс представления для обновления блога.
     Отображает форму обновления блога и сохраняет измененные данные блога при успешной валидации формы.
@@ -224,7 +228,7 @@ class BlogPostUpdateView(UpdateView):
         return reverse_lazy('blog_post_detail', kwargs={'slug': self.object.slug})
 
 
-class BlogPostDeleteView(DeleteView):
+class BlogPostDeleteView(LoginRequiredMixin, DeleteView):
     """
     Класс представления для удаления блога.
     Отображает подтверждающий экран удаления блога и удаляет блог при подтверждении.

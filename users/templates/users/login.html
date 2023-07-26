@@ -16,6 +16,7 @@
     <h1>Войти</h1>
 
     <form enctype="multipart/form-data" method="post">
+
         {% csrf_token %}
         {{form.as_p}}
 
@@ -31,5 +32,6 @@
         $(document).ready(function () {
             M.AutoInit();
         });
+
     </script>
 </div>
