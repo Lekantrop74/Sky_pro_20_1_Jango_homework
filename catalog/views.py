@@ -3,6 +3,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMix
 from django.core.paginator import Paginator
 from django.db.models import Prefetch
 from django.forms import inlineformset_factory
+from django.http import Http404
 from django.template.defaultfilters import slugify
 from unidecode import unidecode
 
@@ -103,6 +104,12 @@ class ProductUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView)
     template_name = 'catalog/product_page/product_update.html'
     form_class = ProductForm
 
+    def get_object(self, queryset=None):
+        self.object = super().get_object(queryset)
+        if self.object.owner != self.request.user and not self.request.user.is_superuser and self.request.user.is_staff:
+            raise Http404
+        return self.object
+
     def get_success_url(self):
         return reverse('product_update', args=[self.object.pk])
 
@@ -137,7 +144,7 @@ class ProductDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     success_url = reverse_lazy('product_list_base')
 
     def test_func(self):
-        return self.request.is_superuser
+        return self.request.user.is_superuser
 
 
 class BlogPostListView(ListView):
