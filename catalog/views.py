@@ -107,7 +107,7 @@ class ProductUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView)
     def get_object(self, queryset=None):
         self.object = super().get_object(queryset)
         if self.object.owner != self.request.user and not self.request.user.is_superuser\
-                and not self.request.user.is_staff:
+                 and not self.request.user.is_staff:
             raise Http404
         return self.object
 
